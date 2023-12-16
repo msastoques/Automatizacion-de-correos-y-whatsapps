@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <base target="_top">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: rgb(255, 243, 205);
+        }
+
+        .loading-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            background-color: #f4f4f4;
+        }
+
+        .loading-spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid rgb(25, 135, 84);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        p {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <img style="width: 50%;"
+        src="https://institucion-educativa-eugenio-diaz-castro.micolombiadigital.gov.co/sites/institucion-educativa-eugenio-diaz-castro/content/files/000001/14_eugenio2_200x200.png"
+        alt="" class="img-fluid p-3">
+    <div class="d-flex flex-column m-2">
+
+        <label for="selectAsignatura">Asignatura:</label>
+        <select name="selectAsignatura" id="selectAsignatura" onchange="seleccionarAsignatura()">
+            <option>Seleccionar...</option>
+        </select>
+
+        <label for="selectSede">Sede:</label>
+        <select name="selectSede" id="selectSede" onchange="seleccionarSede()">
+            <option>Seleccionar...</option>
+        </select>
+
+        <label for="selectGrado">Grado:</label>
+        <select name="selectGrado" id="selectGrado" onchange="seleccionarGrado()">
+            <option>Seleccionar...</option>
+        </select>
+
+        <label for="selectPeriodo">Periodo:</label>
+        <select name="selectPeriodo" id="selectPeriodo" onchange="seleccionarPeriodo()">
+            <option>Seleccionar...</option>
+        </select>
+
+        <button id="miBoton" class="btn btn-success m-2" onclick="filtrarPlanilla()">Filtrar Lista</button>
+        <button id="miBoton2" class="btn btn-light m-2" onclick="filtrarPlanilla()">
+            <img style="width: 100%;" src="https://institucion-educativa-eugenio-diaz-castro.micolombiadigital.gov.co/sites/institucion-educativa-eugenio-diaz-castro/content/files/000069/3428_whatssapp_200x200.png" alt="whatsapp">
+        </button>
+        <button id="miBoton3" class="btn btn-light m-2" onclick="enviarCorreo()">
+            <img style="width: 100%;" src="https://institucion-educativa-eugenio-diaz-castro.micolombiadigital.gov.co/sites/institucion-educativa-eugenio-diaz-castro/content/files/000069/3429_gmail_200x200.png" alt="gmail">
+        </button>
+       
+        
+
+        <p id="mensajes" style="color: rgb(165, 79, 79);"></p>
+    </div>
+    <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Procesando...</p>
+    </div>
+    <script>
+        var selectedAsignatura = "";
+        var selectedSede = "";
+        var selectedGrado = "";
+        var selectedPeriodo = "";
+        document.addEventListener("DOMContentLoaded", function () {
+            //agregar asignaturas
+            google.script.run.withSuccessHandler(opcionesAsignatura).getAsignaturas();
+            google.script.run.withSuccessHandler(opcionesSede).getSedes();
+            google.script.run.withSuccessHandler(opcionesGrado).getGrados();      
+            google.script.run.withSuccessHandler(opcionesPeriodo).getPeriodos();      
+
+
+        });
+
+        function enviarCorreo() {
+            //Iniciar animación de 'procesando'
+            document.querySelector(".loading-container").style.display = "flex";
+
+            if (selectedAsignatura == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado la Asignatura";
+            } else if (selectedSede == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado la Sede";
+            } else if (selectedGrado == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado el Grado";
+            } else if (selectedPeriodo == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado el Periodo";
+            }
+            // Obtén una referencia al botón por su ID o como mejor lo necesites.
+            var boton = document.getElementById('miBoton');
+            // Deshabilita el botón.
+            boton.disabled = true;
+
+            google.script.run.withSuccessHandler(habilitarBoton).enviarCorreo(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo);
+
+            
+        }
+
+
+        function filtrarPlanilla() {
+            //Iniciar animación de 'procesando'
+            document.querySelector(".loading-container").style.display = "flex";
+
+            if (selectedAsignatura == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado la Asignatura";
+            } else if (selectedSede == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado la Sede";
+            } else if (selectedGrado == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado el Grado";
+            } else if (selectedPeriodo == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado el Periodo";
+            }
+            // Obtén una referencia al botón por su ID o como mejor lo necesites.
+            var boton = document.getElementById('miBoton');
+            // Deshabilita el botón.
+            boton.disabled = true;
+
+            google.script.run.withSuccessHandler(habilitarBoton).generarPlanilla(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo);
+
+            
+        }
+
+        function seleccionarAsignatura() {
+            // Obtener el elemento select
+            var selectElement = document.getElementById("selectAsignatura");
+
+            // Obtener el valor seleccionado
+            selectedAsignatura = selectElement.value;
+
+            if (selectedAsignatura == "Seleccionar...") {
+                selectedAsignatura = "";               
+            }
+            cambiarNombre();  
+        }
+
+        function seleccionarSede() {
+            // Obtener el elemento select
+            var selectElement = document.getElementById("selectSede");
+
+            // Obtener el valor seleccionado
+            selectedSede = selectElement.value;
+            
+            if (selectedSede == "Seleccionar...") {
+                selectedSede = "";               
+            }
+            cambiarNombre();  
+           
+        }
+
+        function seleccionarGrado() {
+            // Obtener el elemento select
+            var selectElement = document.getElementById("selectGrado");
+
+            // Obtener el valor seleccionado
+            selectedGrado = selectElement.value;
+
+            if (selectedGrado == "Seleccionar...") {
+                selectedGrado = "";               
+            }
+            cambiarNombre();  
+        }
+
+        function seleccionarPeriodo() {
+            // Obtener el elemento select
+            var selectElement = document.getElementById("selectPeriodo");
+
+            // Obtener el valor seleccionado
+            selectedPeriodo = selectElement.value;
+
+            if (selectedPeriodo == "Seleccionar...") {
+                selectedPeriodo = "";               
+            }
+            cambiarNombre();  
+        }
+
+        function cambiarNombre() {
+            document.getElementById("mensajes").innerHTML = "";
+            // Obtiene el botón por su id
+            var boton = document.getElementById("miBoton");
+
+            // Cambia el texto del botón
+            boton.innerText = "Generar planilla de " + selectedAsignatura + " - sede " + selectedSede + " - grado " + selectedGrado;
+        }
+
+        function opcionesAsignatura(obj) {
+            const selectAsignatura = document.getElementById("selectAsignatura");
+
+            obj.forEach(element => {
+                const option = document.createElement("option");
+                option.value = element;
+                option.text = element;
+                selectAsignatura.appendChild(option);
+            });
+        }
+
+        function opcionesSede(obj) {
+            const selectSede = document.getElementById("selectSede");
+
+            obj.forEach(element => {
+                const option = document.createElement("option");
+                option.value = element;
+                option.text = element;
+                selectSede.appendChild(option);
+            });
+        }
+
+        function opcionesGrado(obj) {
+            const selectGrado = document.getElementById("selectGrado");
+
+            obj.forEach(element => {
+                const option = document.createElement("option");
+                option.value = element;
+                option.text = element;
+                selectGrado.appendChild(option);
+            });
+        }
+
+        function opcionesPeriodo(obj) {
+            const selectPeriodo = document.getElementById("selectPeriodo");
+
+            obj.forEach(element => {
+                const option = document.createElement("option");
+                option.value = element;
+                option.text = element;
+                selectPeriodo.appendChild(option);
+            });
+        }
+
+        
+
+        // Habilita el botón.
+        function habilitarBoton() {
+            var boton = document.getElementById('miBoton');
+            boton.disabled = false;
+
+            //Detener animación de 'procesando'
+            document.querySelector(".loading-container").style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
