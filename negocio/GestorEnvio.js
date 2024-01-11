@@ -8,6 +8,43 @@ class GestorEnvio {
         this._hojaActual = SpreadsheetApp.getActiveSpreadsheet().getSheets()[1];
     }
 
+    enviarWhatsApp(listaFiltrada) {
+        listaFiltrada.forEach(element => {
+
+            element[21] = '';
+            element[22] = '';
+            element[23] = '';
+            element[24] = '';
+            element[25] = '';
+
+            let image = DriveApp.getFileById("1cqpugDW8z-buVUwiXcEw3rfcbyeiamc3").getAs("image/png")
+            
+            try {
+                //#region enviar correos
+                
+
+                //let url = 'https://api.whatsapp.com/send?phone=' + destinatario + '&text=' + asunto;
+
+                 let url = element[15];
+               
+                
+                Utilities.sleep(1000);
+
+                openUrl(url);
+
+                
+
+                element[6] = 'WhatsApp';
+            } catch (error) {
+                element[6] = 'Sin enviar';
+            }
+
+
+
+        });
+        this.registrarEnvioCorreo(listaFiltrada);
+    }
+
     enviarCorreo(listaFiltrada) {
         listaFiltrada.forEach(element => {
 

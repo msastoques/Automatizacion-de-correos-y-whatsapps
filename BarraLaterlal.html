@@ -76,7 +76,7 @@
         </select>
 
         <button id="miBoton" class="btn btn-success m-2" onclick="filtrarPlanilla()">Filtrar Lista</button>
-        <button id="miBoton2" class="btn btn-light m-2" onclick="filtrarPlanilla()">
+        <button id="miBoton2" class="btn btn-light m-2" onclick="enviarWhatsApp()">
             <img style="width: 100%;" src="https://institucion-educativa-eugenio-diaz-castro.micolombiadigital.gov.co/sites/institucion-educativa-eugenio-diaz-castro/content/files/000069/3428_whatssapp_200x200.png" alt="whatsapp">
         </button>
         <button id="miBoton3" class="btn btn-light m-2" onclick="enviarCorreo()">
@@ -105,6 +105,29 @@
 
 
         });
+
+        function enviarWhatsApp() {
+            //Iniciar animación de 'procesando'
+            document.querySelector(".loading-container").style.display = "flex";
+
+            if (selectedAsignatura == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado la Asignatura";
+            } else if (selectedSede == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado la Sede";
+            } else if (selectedGrado == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado el Grado";
+            } else if (selectedPeriodo == "") {
+                document.getElementById("mensajes").innerHTML = "No ha seleccionado el Periodo";
+            }
+            // Obtén una referencia al botón por su ID o como mejor lo necesites.
+            var boton = document.getElementById('miBoton');
+            // Deshabilita el botón.
+            boton.disabled = true;
+
+            google.script.run.withSuccessHandler(habilitarBoton).enviarWhatsApp(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo);
+
+            
+        }
 
         function enviarCorreo() {
             //Iniciar animación de 'procesando'
