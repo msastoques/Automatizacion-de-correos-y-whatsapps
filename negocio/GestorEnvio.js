@@ -8,6 +8,19 @@ class GestorEnvio {
         this._hojaActual = SpreadsheetApp.getActiveSpreadsheet().getSheets()[1];
     }
 
+    registrarSinEnviar(listaFiltrada) {
+        listaFiltrada.forEach(element => {
+
+            element[21] = '';
+            element[22] = '';
+            element[23] = '';
+            element[24] = '';
+            element[25] = '';
+            element[6] = 'Sin enviar';
+        });
+        this.registrarEnvioCorreo(listaFiltrada);
+    }
+
     enviarWhatsApp(listaFiltrada) {
         listaFiltrada.forEach(element => {
 
