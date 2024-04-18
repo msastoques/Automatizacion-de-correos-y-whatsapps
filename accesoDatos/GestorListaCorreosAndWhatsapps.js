@@ -5,7 +5,7 @@
 
 class GestorListaCorreosAndWhatsapps {
     constructor() {
-        this._hojaActual = getListaCorreos();
+        this._hojaActual = getHojaEnvio();
         this._sede = [];
         this._grado = [];
         this._asignatura = [];
