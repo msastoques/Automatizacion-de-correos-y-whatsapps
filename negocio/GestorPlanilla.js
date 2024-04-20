@@ -10,7 +10,7 @@ class GestorPlanilla {
 
     fillPlanilla(data, periodo, asignatura) {
         //Borrar datos
-        this._hojaActual.getRange('A' + 2 + ':L' + 42).clearContent();
+        this._hojaActual.getRange('A' + 2 + ':L' + 60).clearContent();
 
         //llenar datos
         

@@ -17,7 +17,7 @@ class GestorLista {
     getLista(asignatura, sede, grado) {
         this._listaCompleta = this._hojaActual.getDataRange().getValues();
 
-        this._lista = this._listaCompleta.filter(fila =>fila[0] == true && fila[4] == grado && fila[5] == sede && fila[7] == asignatura);
+        this._lista = this._listaCompleta.filter(fila =>fila[0] == true && fila[4] == grado && fila[5] == sede);
 
         return this._lista;
     }

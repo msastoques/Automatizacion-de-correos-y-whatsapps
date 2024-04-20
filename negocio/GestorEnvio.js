@@ -11,6 +11,7 @@ class GestorEnvio {
     registrarSinEnviar(listaFiltrada) {
         listaFiltrada.forEach(element => {
 
+           
             element[21] = '';
             element[22] = '';
             element[23] = '';
@@ -24,6 +25,7 @@ class GestorEnvio {
     enviarWhatsApp(listaFiltrada) {
         listaFiltrada.forEach(element => {
 
+           
             element[21] = '';
             element[22] = '';
             element[23] = '';
@@ -61,6 +63,7 @@ class GestorEnvio {
     enviarCorreo(listaFiltrada) {
         listaFiltrada.forEach(element => {
 
+            
             element[21] = '';
             element[22] = '';
             element[23] = '';
