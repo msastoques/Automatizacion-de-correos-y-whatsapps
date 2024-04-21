@@ -8,7 +8,7 @@ class GestorPlanilla {
         this._hojaActual = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
     }
 
-    fillPlanilla(data, periodo, asignatura) {
+    fillPlanilla(data, periodo, asignatura,fecha) {
         //Borrar datos
         this._hojaActual.getRange('A' + 2 + ':L' + 60).clearContent();
 
@@ -18,11 +18,11 @@ class GestorPlanilla {
         let datos = [];
 
         data.forEach(element => {
-            datos.push([element[5], element[4], asignatura,periodo, element[1], element[6],, element[16], element[17]])
+            datos.push([element[5], element[4], asignatura,periodo, element[1], element[6],, element[16], element[17],,,,fecha])
         });
         //Logger.log(datos);
 
-        const rango = this._hojaActual.getRange('A' + 2 + ':I' + (datos.length + 1));
+        const rango = this._hojaActual.getRange('A' + 2 + ':M' + (datos.length + 1));
         rango.setValues(datos);
 
         

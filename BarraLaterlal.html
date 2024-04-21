@@ -75,6 +75,9 @@
             <option>Seleccionar...</option>
         </select>
 
+        <label for="selectFecha">Fecha:</label>
+        <input type="date" id="selectFecha" name="selectFecha" onchange="seleccionarFecha()">
+
         <button id="miBoton" class="btn btn-success m-2" onclick="filtrarPlanilla()">Filtrar Lista</button>
         <button id="miBoton" class="btn btn-success m-2" onclick="consultarEstudiantes()">Consultar Estudiantes</button>
         <button id="miBoton" class="btn btn-light m-2" onclick="registrarSinEnviar()">Registrar Sin Enviar</button>
@@ -98,6 +101,7 @@
         var selectedSede = "";
         var selectedGrado = "";
         var selectedPeriodo = "";
+        var selectedFecha = "";
         document.addEventListener("DOMContentLoaded", function () {
             //agregar asignaturas
             google.script.run.withSuccessHandler(opcionesAsignatura).getAsignaturas();
@@ -219,7 +223,7 @@
             // Deshabilita el botón.
             boton.disabled = true;
 
-            google.script.run.withSuccessHandler(habilitarBoton).generarPlanilla(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo);
+            google.script.run.withSuccessHandler(habilitarBoton).generarPlanilla(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo, selectedFecha);
 
             
         }
@@ -277,13 +281,25 @@
             cambiarNombre();  
         }
 
+        function seleccionarFecha() {
+            // Obtener el elemento select
+            var selectElement = document.getElementById("selectFecha");
+
+            // Obtener el valor seleccionado
+            selectedFecha = selectElement.value;
+            
+
+           
+            cambiarNombre();  
+        }
+
         function cambiarNombre() {
             document.getElementById("mensajes").innerHTML = "";
             // Obtiene el botón por su id
             var boton = document.getElementById("miBoton");
 
             // Cambia el texto del botón
-            boton.innerText = "Generar planilla de " + selectedAsignatura + " - sede " + selectedSede + " - grado " + selectedGrado;
+            boton.innerText = "Generar planilla de " + selectedAsignatura + " - sede " + selectedSede + " - grado " + selectedGrado + " - periodo " + selectedPeriodo + " - fecha " + selectedFecha;
         }
 
         function opcionesAsignatura(obj) {

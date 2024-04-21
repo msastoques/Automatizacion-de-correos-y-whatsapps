@@ -155,7 +155,7 @@ function enviarCorreo(asignatura, sede, grado, periodo) {
     return {};
 }
 
-function generarPlanilla(asignatura, sede, grado, periodo) {
+function generarPlanilla(asignatura, sede, grado, periodo, fecha) {
 
     //#region probar function
     // asignatura = 'Artes';
@@ -181,7 +181,7 @@ function generarPlanilla(asignatura, sede, grado, periodo) {
         }
 
         const planilla = new GestorPlanilla();
-        planilla.fillPlanilla(listaFiltrada, periodo, asignatura);
+        planilla.fillPlanilla(listaFiltrada, periodo, asignatura, fecha);
         //Logger.log(listaFiltrada);
 
     } else {
