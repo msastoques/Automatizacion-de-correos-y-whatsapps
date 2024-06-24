@@ -154,18 +154,25 @@
             
             var selectAsig = document.getElementById("selectAsignatura");
             selectAsig.value = "Convivencia";
+            selectedAsignatura = selectAsig.value;
 
             var selectSed = document.getElementById("selectSede");
             selectSed.value = "Hungría";
+            selectedSede = selectSed.value;
 
             var selectPer = document.getElementById("selectPeriodo");
             selectPer.value = "I";
+            selectedPeriodo = selectPer.value;
 
             var selectFal = document.getElementById("selectFalta");
             selectFal.value = "Inasistencia";
+            selectedFalta = selectFal.value;
 
             var selectCon = document.getElementById("selectConducto");
             selectCon.value = "Información";
+            selectedConducto = selectCon.value;
+
+            cambiarNombre();
         }
 
         function registrarSinEnviar() {
