@@ -6,6 +6,7 @@
     <base target="_top">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
@@ -82,34 +83,53 @@
         <select name="selectFalta" id="selectFalta" onchange="seleccionarFalta()">
             <option>Seleccionar...</option>
         </select>
-       
+
 
         <label for="selectConducto">Conducto regular:</label>
         <select name="selectConducto" id="selectConducto" onchange="seleccionarConducto()">
             <option>Seleccionar...</option>
-        </select>      
+        </select>
+        
 
-
+        <div onclick="cargarDatos()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z" />
+                <path
+                    d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
+                <path fill-rule="evenodd"
+                    d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z" />
+            </svg>
+            <span>Cargar datos</span>
+        </div>
         <div class="loading-container">
             <div class="loading-spinner"></div>
             <p>Procesando...</p>
         </div>
+        <p id="mensajes" style="color: rgb(165, 79, 79);"></p>
+
+
 
         <button id="miBoton" class="btn btn-success m-2" onclick="filtrarPlanilla()">Filtrar Lista</button>
-        <button id="miBoton" class="btn btn-success m-2" onclick="consultarEstudiantes()">Consultar Estudiantes</button>
-        <button id="miBoton" class="btn btn-light m-2" onclick="registrarSinEnviar()">Registrar Sin Enviar</button>
-        <button id="miBoton2" class="btn btn-light m-2" onclick="enviarWhatsApp()">
-            <img style="width: 100%;" src="https://institucion-educativa-eugenio-diaz-castro.micolombiadigital.gov.co/sites/institucion-educativa-eugenio-diaz-castro/content/files/000069/3428_whatssapp_200x200.png" alt="whatsapp">
+        <button id="miBoton2" class="btn btn-success m-2" onclick="consultarEstudiantes()">Consultar Estudiantes</button>
+        <button id="miBoton3" class="btn btn-light m-2" onclick="registrarSinEnviar()">Registrar Sin Enviar</button>
+        <button id="miBoton4" class="btn btn-light m-2" onclick="enviarWhatsApp()">
+            <img style="width: 100%;"
+                src="https://institucion-educativa-eugenio-diaz-castro.micolombiadigital.gov.co/sites/institucion-educativa-eugenio-diaz-castro/content/files/000069/3428_whatssapp_200x200.png"
+                alt="whatsapp">
         </button>
-        <button id="miBoton3" class="btn btn-light m-2" onclick="enviarCorreo()">
-            <img style="width: 100%;" src="https://institucion-educativa-eugenio-diaz-castro.micolombiadigital.gov.co/sites/institucion-educativa-eugenio-diaz-castro/content/files/000069/3429_gmail_200x200.png" alt="gmail">
+        <button id="miBoton6" class="btn btn-light m-2" onclick="enviarCorreo()">
+            <img style="width: 100%;"
+                src="https://institucion-educativa-eugenio-diaz-castro.micolombiadigital.gov.co/sites/institucion-educativa-eugenio-diaz-castro/content/files/000069/3429_gmail_200x200.png"
+                alt="gmail">
         </button>
-       
-        
 
-        <p id="mensajes" style="color: rgb(165, 79, 79);"></p>
+
+
+
     </div>
-    
+
     <script>
         var selectedAsignatura = "";
         var selectedSede = "";
@@ -122,13 +142,31 @@
             //agregar asignaturas
             google.script.run.withSuccessHandler(opcionesAsignatura).getAsignaturas();
             google.script.run.withSuccessHandler(opcionesSede).getSedes();
-            google.script.run.withSuccessHandler(opcionesGrado).getGrados();      
-            google.script.run.withSuccessHandler(opcionesPeriodo).getPeriodos();      
-            google.script.run.withSuccessHandler(opcionesFalta).getFaltas();      
-            google.script.run.withSuccessHandler(opcionesConducto).getConductos();      
+            google.script.run.withSuccessHandler(opcionesGrado).getGrados();
+            google.script.run.withSuccessHandler(opcionesPeriodo).getPeriodos();
+            google.script.run.withSuccessHandler(opcionesFalta).getFaltas();
+            google.script.run.withSuccessHandler(opcionesConducto).getConductos();
 
 
         });
+
+        function cargarDatos() {
+            
+            var selectAsig = document.getElementById("selectAsignatura");
+            selectAsig.value = "Convivencia";
+
+            var selectSed = document.getElementById("selectSede");
+            selectSed.value = "Hungría";
+
+            var selectPer = document.getElementById("selectPeriodo");
+            selectPer.value = "I";
+
+            var selectFal = document.getElementById("selectFalta");
+            selectFal.value = "Inasistencia";
+
+            var selectCon = document.getElementById("selectConducto");
+            selectCon.value = "Información";
+        }
 
         function registrarSinEnviar() {
             //Iniciar animación de 'procesando'
@@ -144,13 +182,13 @@
                 document.getElementById("mensajes").innerHTML = "No ha seleccionado el Periodo";
             }
             // Obtén una referencia al botón por su ID o como mejor lo necesites.
-            var boton = document.getElementById('miBoton');
+            var boton = document.getElementById('miBoton3');
             // Deshabilita el botón.
             boton.disabled = true;
 
             google.script.run.withSuccessHandler(habilitarBoton).registrarSinEnviar(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo);
 
-            
+
         }
 
         function enviarWhatsApp() {
@@ -167,13 +205,13 @@
                 document.getElementById("mensajes").innerHTML = "No ha seleccionado el Periodo";
             }
             // Obtén una referencia al botón por su ID o como mejor lo necesites.
-            var boton = document.getElementById('miBoton');
+            var boton = document.getElementById('miBoton4');
             // Deshabilita el botón.
             boton.disabled = true;
 
             google.script.run.withSuccessHandler(habilitarBoton).enviarWhatsApp(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo);
 
-            
+
         }
 
         function enviarCorreo() {
@@ -190,13 +228,13 @@
                 document.getElementById("mensajes").innerHTML = "No ha seleccionado el Periodo";
             }
             // Obtén una referencia al botón por su ID o como mejor lo necesites.
-            var boton = document.getElementById('miBoton');
+            var boton = document.getElementById('miBoton6');
             // Deshabilita el botón.
             boton.disabled = true;
 
             google.script.run.withSuccessHandler(habilitarBoton).enviarCorreo(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo);
 
-            
+
         }
 
         function consultarEstudiantes() {
@@ -213,13 +251,13 @@
                 document.getElementById("mensajes").innerHTML = "No ha seleccionado el Periodo";
             }
             // Obtén una referencia al botón por su ID o como mejor lo necesites.
-            var boton = document.getElementById('miBoton');
+            var boton = document.getElementById('miBoton2');
             // Deshabilita el botón.
             boton.disabled = true;
 
             google.script.run.withSuccessHandler(habilitarBoton).consultarEstudiantes(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo);
 
-            
+
         }
 
 
@@ -243,10 +281,10 @@
 
             google.script.run.withSuccessHandler(habilitarBoton).generarPlanilla(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo, selectedFecha, selectedFalta, selectedConducto);
 
-            
+
         }
 
-        
+
 
         function seleccionarAsignatura() {
             // Obtener el elemento select
@@ -256,9 +294,9 @@
             selectedAsignatura = selectElement.value;
 
             if (selectedAsignatura == "Seleccionar...") {
-                selectedAsignatura = "";               
+                selectedAsignatura = "";
             }
-            cambiarNombre();  
+            cambiarNombre();
         }
 
         function seleccionarSede() {
@@ -267,12 +305,12 @@
 
             // Obtener el valor seleccionado
             selectedSede = selectElement.value;
-            
+
             if (selectedSede == "Seleccionar...") {
-                selectedSede = "";               
+                selectedSede = "";
             }
-            cambiarNombre();  
-           
+            cambiarNombre();
+
         }
 
         function seleccionarGrado() {
@@ -283,9 +321,9 @@
             selectedGrado = selectElement.value;
 
             if (selectedGrado == "Seleccionar...") {
-                selectedGrado = "";               
+                selectedGrado = "";
             }
-            cambiarNombre();  
+            cambiarNombre();
         }
 
         function seleccionarPeriodo() {
@@ -296,9 +334,9 @@
             selectedPeriodo = selectElement.value;
 
             if (selectedPeriodo == "Seleccionar...") {
-                selectedPeriodo = "";               
+                selectedPeriodo = "";
             }
-            cambiarNombre();  
+            cambiarNombre();
         }
 
         function seleccionarFecha() {
@@ -307,10 +345,10 @@
 
             // Obtener el valor seleccionado
             selectedFecha = selectElement.value;
-            
 
-           
-            cambiarNombre();  
+
+
+            cambiarNombre();
         }
 
         function seleccionarFalta() {
@@ -321,9 +359,9 @@
             selectedFalta = selectElement.value;
 
             if (selectedFalta == "Seleccionar...") {
-                selectedFalta = "";               
+                selectedFalta = "";
             }
-            cambiarNombre();  
+            cambiarNombre();
         }
 
         function seleccionarConducto() {
@@ -334,9 +372,9 @@
             selectedConducto = selectElement.value;
 
             if (selectedConducto == "Seleccionar...") {
-                selectedConducto = "";               
+                selectedConducto = "";
             }
-            cambiarNombre();  
+            cambiarNombre();
         }
 
         function cambiarNombre() {
@@ -345,7 +383,7 @@
             var boton = document.getElementById("miBoton");
 
             // Cambia el texto del botón
-            boton.innerText = "Generar planilla de " + selectedAsignatura + " - sede " + selectedSede + " - grado " + selectedGrado + " - periodo " + selectedPeriodo + " - fecha " + selectedFecha+ " - " + selectedFalta+ " - conducto regular: " + selectedConducto;
+            boton.innerText = "Generar planilla de " + selectedAsignatura + " - sede " + selectedSede + " - grado " + selectedGrado + " - periodo " + selectedPeriodo + " - fecha " + selectedFecha + " - " + selectedFalta + " - conducto regular: " + selectedConducto;
         }
 
         function opcionesAsignatura(obj) {
@@ -414,12 +452,27 @@
             });
         }
 
-        
+
 
         // Habilita el botón.
         function habilitarBoton() {
             var boton = document.getElementById('miBoton');
             boton.disabled = false;
+
+            var boton2 = document.getElementById('miBoton2');
+            boton2.disabled = false;
+
+            var boton3 = document.getElementById('miBoton3');
+            boton3.disabled = false;
+
+            var boton4 = document.getElementById('miBoton4');
+            boton4.disabled = false;
+
+            var boton5 = document.getElementById('miBoton5');
+            boton5.disabled = false;
+
+            var boton6 = document.getElementById('miBoton6');
+            boton5.disabled = false;
 
             //Detener animación de 'procesando'
             document.querySelector(".loading-container").style.display = "none";
