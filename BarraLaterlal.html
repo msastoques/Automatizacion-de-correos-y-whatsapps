@@ -78,6 +78,23 @@
         <label for="selectFecha">Fecha:</label>
         <input type="date" id="selectFecha" name="selectFecha" onchange="seleccionarFecha()">
 
+        <label for="selectFalta">Falta/Reconocimiento:</label>
+        <select name="selectFalta" id="selectFalta" onchange="seleccionarFalta()">
+            <option>Seleccionar...</option>
+        </select>
+       
+
+        <label for="selectConducto">Conducto regular:</label>
+        <select name="selectConducto" id="selectConducto" onchange="seleccionarConducto()">
+            <option>Seleccionar...</option>
+        </select>      
+
+
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p>Procesando...</p>
+        </div>
+
         <button id="miBoton" class="btn btn-success m-2" onclick="filtrarPlanilla()">Filtrar Lista</button>
         <button id="miBoton" class="btn btn-success m-2" onclick="consultarEstudiantes()">Consultar Estudiantes</button>
         <button id="miBoton" class="btn btn-light m-2" onclick="registrarSinEnviar()">Registrar Sin Enviar</button>
@@ -92,22 +109,23 @@
 
         <p id="mensajes" style="color: rgb(165, 79, 79);"></p>
     </div>
-    <div class="loading-container">
-        <div class="loading-spinner"></div>
-        <p>Procesando...</p>
-    </div>
+    
     <script>
         var selectedAsignatura = "";
         var selectedSede = "";
         var selectedGrado = "";
         var selectedPeriodo = "";
         var selectedFecha = "";
+        var selectedFalta = "";
+        var selectedConducto = "";
         document.addEventListener("DOMContentLoaded", function () {
             //agregar asignaturas
             google.script.run.withSuccessHandler(opcionesAsignatura).getAsignaturas();
             google.script.run.withSuccessHandler(opcionesSede).getSedes();
             google.script.run.withSuccessHandler(opcionesGrado).getGrados();      
             google.script.run.withSuccessHandler(opcionesPeriodo).getPeriodos();      
+            google.script.run.withSuccessHandler(opcionesFalta).getFaltas();      
+            google.script.run.withSuccessHandler(opcionesConducto).getConductos();      
 
 
         });
@@ -223,10 +241,12 @@
             // Deshabilita el botón.
             boton.disabled = true;
 
-            google.script.run.withSuccessHandler(habilitarBoton).generarPlanilla(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo, selectedFecha);
+            google.script.run.withSuccessHandler(habilitarBoton).generarPlanilla(selectedAsignatura, selectedSede, selectedGrado, selectedPeriodo, selectedFecha, selectedFalta, selectedConducto);
 
             
         }
+
+        
 
         function seleccionarAsignatura() {
             // Obtener el elemento select
@@ -293,13 +313,39 @@
             cambiarNombre();  
         }
 
+        function seleccionarFalta() {
+            // Obtener el elemento select
+            var selectElement = document.getElementById("selectFalta");
+
+            // Obtener el valor seleccionado
+            selectedFalta = selectElement.value;
+
+            if (selectedFalta == "Seleccionar...") {
+                selectedFalta = "";               
+            }
+            cambiarNombre();  
+        }
+
+        function seleccionarConducto() {
+            // Obtener el elemento select
+            var selectElement = document.getElementById("selectConducto");
+
+            // Obtener el valor seleccionado
+            selectedConducto = selectElement.value;
+
+            if (selectedConducto == "Seleccionar...") {
+                selectedConducto = "";               
+            }
+            cambiarNombre();  
+        }
+
         function cambiarNombre() {
             document.getElementById("mensajes").innerHTML = "";
             // Obtiene el botón por su id
             var boton = document.getElementById("miBoton");
 
             // Cambia el texto del botón
-            boton.innerText = "Generar planilla de " + selectedAsignatura + " - sede " + selectedSede + " - grado " + selectedGrado + " - periodo " + selectedPeriodo + " - fecha " + selectedFecha;
+            boton.innerText = "Generar planilla de " + selectedAsignatura + " - sede " + selectedSede + " - grado " + selectedGrado + " - periodo " + selectedPeriodo + " - fecha " + selectedFecha+ " - " + selectedFalta+ " - conducto regular: " + selectedConducto;
         }
 
         function opcionesAsignatura(obj) {
@@ -337,6 +383,28 @@
 
         function opcionesPeriodo(obj) {
             const selectPeriodo = document.getElementById("selectPeriodo");
+
+            obj.forEach(element => {
+                const option = document.createElement("option");
+                option.value = element;
+                option.text = element;
+                selectPeriodo.appendChild(option);
+            });
+        }
+
+        function opcionesFalta(obj) {
+            const selectPeriodo = document.getElementById("selectFalta");
+
+            obj.forEach(element => {
+                const option = document.createElement("option");
+                option.value = element;
+                option.text = element;
+                selectPeriodo.appendChild(option);
+            });
+        }
+
+        function opcionesConducto(obj) {
+            const selectPeriodo = document.getElementById("selectConducto");
 
             obj.forEach(element => {
                 const option = document.createElement("option");

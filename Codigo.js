@@ -155,7 +155,7 @@ function enviarCorreo(asignatura, sede, grado, periodo) {
     return {};
 }
 
-function generarPlanilla(asignatura, sede, grado, periodo, fecha) {
+function generarPlanilla(asignatura, sede, grado, periodo, fecha, falta, conducto) {
 
     //#region probar function
     // asignatura = 'Artes';
@@ -164,7 +164,7 @@ function generarPlanilla(asignatura, sede, grado, periodo, fecha) {
     // periodo = 'II';
     //#endregion
 
-    if (asignatura == "" || sede == "" || grado == "" || periodo == "") {
+    if (asignatura == "" || sede == "" || grado == "" || periodo == "" || falta == "" || conducto == "") {
         return {};
     }
     
@@ -181,7 +181,7 @@ function generarPlanilla(asignatura, sede, grado, periodo, fecha) {
         }
 
         const planilla = new GestorPlanilla();
-        planilla.fillPlanilla(listaFiltrada, periodo, asignatura, fecha);
+        planilla.fillPlanilla(listaFiltrada, periodo, asignatura, fecha, falta, conducto);
         //Logger.log(listaFiltrada);
 
     } else {

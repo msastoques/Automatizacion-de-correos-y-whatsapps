@@ -93,6 +93,38 @@ class GestorLista {
         }
         return this._periodo;
     }
+
+    getFaltas() {
+
+        const inicio = 2;
+        const fin = 25;
+        const rango = this._hojaActual.getRange('X' + inicio + ':X' + fin);
+        this._periodo = [];
+
+        const hasta = (fin - inicio + 2);
+        for (let i = 1; i < hasta; i++) {
+            let dato = rango.getCell(i, 1).getValue();
+            if (dato == "") break;
+            this._periodo.push(dato);
+        }
+        return this._periodo;
+    }
+
+    getConductos() {
+
+        const inicio = 2;
+        const fin = 15;
+        const rango = this._hojaActual.getRange('W' + inicio + ':W' + fin);
+        this._periodo = [];
+
+        const hasta = (fin - inicio + 2);
+        for (let i = 1; i < hasta; i++) {
+            let dato = rango.getCell(i, 1).getValue();
+            if (dato == "") break;
+            this._periodo.push(dato);
+        }
+        return this._periodo;
+    }
 }
 
 //#region prueba

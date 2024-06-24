@@ -32,3 +32,19 @@ function getPeriodos() {
     
     return lista;
 }
+
+function getFaltas() {
+    const gestor = new GestorLista();
+
+    let lista = gestor.getFaltas();
+    
+    return lista;
+}
+
+function getConductos() {
+    const gestor = new GestorLista();
+
+    let lista = gestor.getConductos();
+    
+    return lista;
+}
