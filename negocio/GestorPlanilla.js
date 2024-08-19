@@ -18,7 +18,7 @@ class GestorPlanilla {
         let datos = [];
 
         data.forEach(element => {
-            datos.push([element[5], element[4], asignatura,periodo, element[1], element[6],, element[16], element[17],falta,conducto,,fecha])
+            datos.push([element[5], element[4], asignatura,periodo, element[1], element[6],, element[16], element[18],falta,conducto,,fecha])
         });
         //Logger.log(datos);
 
